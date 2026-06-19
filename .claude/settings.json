@@ -43,7 +43,20 @@
       "Bash(cargo install *)",
       "Bash(python3 -c \"import yaml; d=yaml.safe_load\\(open\\('.github/workflows/release.yml'\\)\\); print\\('release.yml OK — jobs:', list\\(d['jobs'].keys\\(\\)\\)\\)\")",
       "Bash(echo \"cog now: $\\(command -v cog || echo 'still installing'\\)\")",
-      "Bash(awk '/^## /{n++} n==1{print} n==2{exit}' CHANGELOG.md)"
+      "Bash(awk '/^## /{n++} n==1{print} n==2{exit}' CHANGELOG.md)",
+      "Bash(gh auth *)",
+      "Bash(gh run *)",
+      "Bash(env -u GITHUB_TOKEN gh auth status)",
+      "Bash(env -u GITHUB_TOKEN gh run list --limit 15)",
+      "Bash(env -u GITHUB_TOKEN gh run view 27841343847 --log-failed)",
+      "Bash(env -u GITHUB_TOKEN git fetch -q origin main)",
+      "Bash(env -u GITHUB_TOKEN git ls-remote --tags origin)",
+      "Bash(env -u GITHUB_TOKEN gh release list --limit 3)",
+      "Bash(curl -s -H \"User-Agent: hc\" https://crates.io/api/v1/crates/holocron)",
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\('crates.io max version:', d['crate']['max_version']\\) if d.get\\('crate'\\) else print\\('NOT on crates.io yet'\\)\")",
+      "Bash(git checkout *)",
+      "Bash(env -u GITHUB_TOKEN git pull --ff-only origin main)",
+      "Bash(python3 -c \"import yaml; yaml.safe_load\\(open\\('.github/workflows/release.yml'\\)\\); print\\('release.yml OK'\\)\")"
     ],
     "additionalDirectories": [
       "/Users/extinctcoder"
