@@ -1,0 +1,6 @@
+# Cargo configuration for the Holocron workspace.
+
+[build]
+# Default the generated documentation (`cargo doc`) to the "ayu" theme.
+# Readers can still switch themes via the gear icon in the rendered docs.
+rustdocflags = ["--default-theme", "ayu"]

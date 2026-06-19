@@ -24,7 +24,11 @@
       "Bash(ls -l \"$\\(mkcert -CAROOT\\)/rootCA.pem\")",
       "Read(//Users/extinctcoder/**)",
       "Bash(zsh -i -c ' *)",
-      "Bash(grep -vE 'zoxide|ajeetdsouza|persists|Disable|^\\\\s*$|configuration issue|filing an issue')"
+      "Bash(grep -vE 'zoxide|ajeetdsouza|persists|Disable|^\\\\s*$|configuration issue|filing an issue')",
+      "Bash(cargo doc *)",
+      "Bash(RUSTDOCFLAGS=\"-D warnings\" cargo doc --no-deps --all-features)",
+      "Bash(open target/doc/holocron/index.html)",
+      "Bash(rustdoc --help)"
     ],
     "additionalDirectories": [
       "/Users/extinctcoder"
