@@ -3,5 +3,5 @@
 version = 4
 
 [[package]]
-name = "oxidex"
+name = "holocron"
 version = "0.0.0"

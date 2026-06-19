@@ -1,5 +1,5 @@
 [package]
-name = "oxidex"
+name = "holocron"
 version = "0.0.0"
 edition = "2021"
 description = "Declarative schema & query compiler — one YAML as the source of truth for SQL schema and a type-checked query catalog."
@@ -8,5 +8,5 @@ keywords = ["sql", "schema", "compiler", "query", "yaml"]
 categories = ["database", "compilers"]
 
 [[bin]]
-name = "oxidex"
+name = "holocron"
 path = "src/main.rs"
