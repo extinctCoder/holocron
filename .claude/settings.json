@@ -28,7 +28,10 @@
       "Bash(cargo doc *)",
       "Bash(RUSTDOCFLAGS=\"-D warnings\" cargo doc --no-deps --all-features)",
       "Bash(open target/doc/holocron/index.html)",
-      "Bash(rustdoc --help)"
+      "Bash(rustdoc --help)",
+      "Bash(python3 -c \"import yaml; yaml.safe_load\\(open\\('.github/workflows/docs.yml'\\)\\); print\\('docs.yml YAML OK'\\)\")",
+      "Bash(python3 -c \"import yaml; d=yaml.safe_load\\(open\\('.github/workflows/ci.yml'\\)\\); print\\('ci.yml OK — jobs:', list\\(d['jobs'].keys\\(\\)\\)\\)\")",
+      "Bash(python3 -c \"import yaml; d=yaml.safe_load\\(open\\('.github/workflows/docs.yml'\\)\\); print\\('docs.yml OK — jobs:', list\\(d['jobs'].keys\\(\\)\\)\\)\")"
     ],
     "additionalDirectories": [
       "/Users/extinctcoder"
