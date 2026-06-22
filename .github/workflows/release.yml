@@ -122,10 +122,10 @@ jobs:
           tag_name: ${{ steps.bump.outputs.tag }}
           body_path: ${{ runner.temp }}/RELEASE_NOTES.md
 
-  # Build the holocron binary for each platform and attach the archives to the
-  # GitHub Release created above. Runs only when a release was actually cut.
+  # Build both binaries (CLI + LSP server) for each platform and attach the
+  # archives to the GitHub Release. Runs only when a release was actually cut.
   upload-binaries:
-    name: Upload binary (${{ matrix.target }})
+    name: Upload binaries (${{ matrix.target }})
     needs: release
     if: needs.release.outputs.released == 'true'
     permissions:
@@ -146,18 +146,20 @@ jobs:
             os: windows-latest
     runs-on: ${{ matrix.os }}
     steps:
-      # Check out the released tag so the binary matches the published version.
+      # Check out the released tag so the binaries match the published version.
       - uses: actions/checkout@v7
         with:
           ref: refs/tags/${{ needs.release.outputs.tag }}
 
-      - name: Build and upload binary
+      - name: Build and upload binaries
         uses: taiki-e/upload-rust-binary-action@v1
         with:
-          bin: holocron
+          # Both binaries in one archive per platform — users get the CLI and
+          # the LSP server in one download instead of two.
+          bin: holocron,holocron-lsp
           target: ${{ matrix.target }}
-          # Archive name, e.g. holocron-v0.1.3-x86_64-unknown-linux-gnu.tar.gz
-          archive: $bin-$tag-$target
+          # Archive name, e.g. holocron-v0.3.0-x86_64-unknown-linux-gnu.tar.gz
+          archive: holocron-$tag-$target
           # Attach to the release for the tag we just created.
           ref: refs/tags/${{ needs.release.outputs.tag }}
           # Also bundle these files and publish a SHA-256 checksum per archive.
