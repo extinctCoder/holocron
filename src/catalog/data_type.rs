@@ -53,4 +53,18 @@ impl CatalogType {
     pub fn supports_null_check(&self) -> bool {
         true
     }
+
+    /// Display name for diagnostics. For enums, the enum's declared name.
+    pub fn name(&self) -> &str {
+        match self {
+            Self::Text => "Text",
+            Self::Number => "Number",
+            Self::Timestamp => "Timestamp",
+            Self::Uuid => "Uuid",
+            Self::Bool => "Bool",
+            Self::Json => "Json",
+            Self::TextArray => "TextArray",
+            Self::Enum(name) => name.as_str(),
+        }
+    }
 }

@@ -20,6 +20,16 @@ pub struct SelectColumn {
     /// Output name; defaults to the column name when absent.
     #[serde(default)]
     pub r#as: Option<String>,
+    /// Whether queries may filter on this column. Defaults to `true`.
+    #[serde(default = "default_filterable")]
+    pub filterable: bool,
+    /// Whether free-text search includes this column. Defaults to `false`.
+    #[serde(default)]
+    pub searchable: bool,
+}
+
+fn default_filterable() -> bool {
+    true
 }
 
 /// A raw SQL expression with a declared output name (escape hatch).

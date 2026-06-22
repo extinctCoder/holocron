@@ -50,6 +50,23 @@ pub enum HolocronError {
     /// A construct that is recognised but not yet implemented.
     #[error("unsupported: {0}")]
     Unsupported(String),
+
+    /// A query targets a relation the catalog has no entry for.
+    #[error("unknown relation `{0}`")]
+    UnknownRelation(String),
+
+    /// A query filter references a column declared non-filterable.
+    #[error("column `{relation}.{column}` is not filterable")]
+    NotFilterable { relation: String, column: String },
+
+    /// An operator is not valid for the column's type.
+    #[error("operator `{operator}` not supported on `{relation}.{column}` of type `{data_type}`")]
+    OperatorNotSupported {
+        relation: String,
+        column: String,
+        data_type: String,
+        operator: String,
+    },
 }
 
 impl HolocronError {
@@ -119,5 +136,30 @@ impl HolocronError {
 
     pub(crate) fn unsupported(message: impl Into<String>) -> Self {
         Self::Unsupported(message.into())
+    }
+
+    pub(crate) fn unknown_relation(name: impl Into<String>) -> Self {
+        Self::UnknownRelation(name.into())
+    }
+
+    pub(crate) fn not_filterable(relation: impl Into<String>, column: impl Into<String>) -> Self {
+        Self::NotFilterable {
+            relation: relation.into(),
+            column: column.into(),
+        }
+    }
+
+    pub(crate) fn operator_not_supported(
+        relation: impl Into<String>,
+        column: impl Into<String>,
+        data_type: impl Into<String>,
+        operator: impl Into<String>,
+    ) -> Self {
+        Self::OperatorNotSupported {
+            relation: relation.into(),
+            column: column.into(),
+            data_type: data_type.into(),
+            operator: operator.into(),
+        }
     }
 }

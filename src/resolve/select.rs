@@ -49,5 +49,9 @@ fn resolve_item(
         name,
         data_type: source.data_type.clone(),
         nullable: source.nullable,
+        // The view declares the per-column query policy explicitly; defaults
+        // come from the AST (filterable=true, searchable=false).
+        filterable: select.filterable,
+        searchable: select.searchable,
     })
 }

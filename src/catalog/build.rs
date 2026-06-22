@@ -41,6 +41,10 @@ fn build_tables(
                 name: name.clone(),
                 data_type,
                 nullable: column.null,
+                // Table columns are filterable by default; searchable is opt-in
+                // (view select items can override both).
+                filterable: true,
+                searchable: false,
             });
         }
         let relation = CatalogRelation {

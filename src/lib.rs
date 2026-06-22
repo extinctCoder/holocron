@@ -2,7 +2,9 @@
 
 mod ast;
 mod catalog;
+mod emit;
 mod error;
+mod query;
 mod resolve;
 
 pub use ast::{
@@ -12,6 +14,7 @@ pub use ast::{
 pub use catalog::{
     build_catalog, Catalog, CatalogColumn, CatalogRelation, CatalogType, RelationKind,
 };
-
+pub use emit::emit_schema;
 pub use error::HolocronError;
+pub use query::{check_query, CheckedQuery, CompareOp, Comparison, Filter, Query, SetOp};
 pub use resolve::resolve_views;
