@@ -12,6 +12,8 @@ pub use relation::{CatalogRelation, RelationKind};
 
 use indexmap::IndexMap;
 
+use crate::error::HolocronError;
+
 /// The symbol table: relations and enum types, each looked up by name.
 /// Ordered maps keep iteration (and therefore emitted output) deterministic.
 #[derive(Debug, Clone, Default)]
@@ -34,5 +36,17 @@ impl Catalog {
     /// Iterate all relations in declaration order.
     pub fn relations(&self) -> impl Iterator<Item = &CatalogRelation> {
         self.relations.values()
+    }
+
+    /// Add a relation, erroring if one with the same name already exists.
+    pub(crate) fn insert_relation(
+        &mut self,
+        relation: CatalogRelation,
+    ) -> Result<(), HolocronError> {
+        let name = relation.name.clone();
+        if self.relations.insert(name.clone(), relation).is_some() {
+            return Err(HolocronError::duplicate_relation(name));
+        }
+        Ok(())
     }
 }

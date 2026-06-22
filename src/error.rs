@@ -22,6 +22,34 @@ pub enum HolocronError {
     /// Two enum types share a name.
     #[error("duplicate enum type `{0}`")]
     DuplicateEnum(String),
+
+    /// A view source references a relation that does not exist.
+    #[error("view `{view}`: source `{alias}` references unknown relation `{relation}`")]
+    UnknownSource {
+        view: String,
+        alias: String,
+        relation: String,
+    },
+
+    /// Two sources in a view share an alias.
+    #[error("view `{view}`: duplicate alias `{alias}`")]
+    DuplicateAlias { view: String, alias: String },
+
+    /// A select item's `from` is not a declared alias in the view.
+    #[error("view `{view}`: select references unknown alias `{alias}`")]
+    UnknownAlias { view: String, alias: String },
+
+    /// A select omitted `from` but the view has more than one source.
+    #[error("view `{view}`: column `{column}` needs an explicit `from` (multiple sources)")]
+    AmbiguousSource { view: String, column: String },
+
+    /// A select references a column the relation does not have.
+    #[error("column `{column}` does not exist in relation `{relation}`")]
+    UnknownColumn { relation: String, column: String },
+
+    /// A construct that is recognised but not yet implemented.
+    #[error("unsupported: {0}")]
+    Unsupported(String),
 }
 
 impl HolocronError {
@@ -47,5 +75,49 @@ impl HolocronError {
 
     pub(crate) fn duplicate_enum(name: impl Into<String>) -> Self {
         Self::DuplicateEnum(name.into())
+    }
+
+    pub(crate) fn unknown_source(
+        view: impl Into<String>,
+        alias: impl Into<String>,
+        relation: impl Into<String>,
+    ) -> Self {
+        Self::UnknownSource {
+            view: view.into(),
+            alias: alias.into(),
+            relation: relation.into(),
+        }
+    }
+
+    pub(crate) fn duplicate_alias(view: impl Into<String>, alias: impl Into<String>) -> Self {
+        Self::DuplicateAlias {
+            view: view.into(),
+            alias: alias.into(),
+        }
+    }
+
+    pub(crate) fn unknown_alias(view: impl Into<String>, alias: impl Into<String>) -> Self {
+        Self::UnknownAlias {
+            view: view.into(),
+            alias: alias.into(),
+        }
+    }
+
+    pub(crate) fn ambiguous_source(view: impl Into<String>, column: impl Into<String>) -> Self {
+        Self::AmbiguousSource {
+            view: view.into(),
+            column: column.into(),
+        }
+    }
+
+    pub(crate) fn unknown_column(relation: impl Into<String>, column: impl Into<String>) -> Self {
+        Self::UnknownColumn {
+            relation: relation.into(),
+            column: column.into(),
+        }
+    }
+
+    pub(crate) fn unsupported(message: impl Into<String>) -> Self {
+        Self::Unsupported(message.into())
     }
 }

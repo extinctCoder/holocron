@@ -3,6 +3,7 @@
 mod ast;
 mod catalog;
 mod error;
+mod resolve;
 
 pub use ast::{
     parse_schema, Column, EnumType, FromClause, Index, Join, JoinKind, PrimaryKey, SchemaDocument,
@@ -13,3 +14,4 @@ pub use catalog::{
 };
 
 pub use error::HolocronError;
+pub use resolve::resolve_views;
